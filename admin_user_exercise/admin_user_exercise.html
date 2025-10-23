@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteFit | Admin - User Workouts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Additional styles for admin workouts page - Matching the original theme */
+        :root {
+            --primary-bg: #0c0c0c;
+            --secondary-bg: #1a1a1a;
+            --accent-color: #8b0000;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(15, 15, 15, 0.95);
+            --success-color: #00cc00;
+            --error-color: #ff4444;
+            --warning-color: #ffaa00;
+            --info-color: #007bff;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            padding: 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles - Matching original theme */
+        .header {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .brand h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #e6e6e6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand span {
+            color: var(--accent-color);
+            font-size: 0.8rem;
+            font-weight: 300;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Button Styles - Matching original theme */
+        .control-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(139, 0, 0, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 0, 0, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        /* User Info Card - Matching original card style */
+        .user-info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .admin-header {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .admin-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .user-detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .user-detail-label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .user-detail-value {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .role-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .role-admin {
+            background: rgba(139, 0, 0, 0.2);
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+        }
+
+        .role-nonadmin {
+            background: rgba(0, 100, 200, 0.2);
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Date Input - Matching original theme */
+        .date-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        /* Workout Statistics - Matching original stats grid */
+        .workout-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .workout-stat-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workout-stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(139, 0, 0, 0.1), 
+                transparent);
+            transition: left 0.6s ease;
+        }
+
+        .workout-stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 35px rgba(139, 0, 0, 0.2),
+                0 5px 15px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: rgba(139, 0, 0, 0.3);
+        }
+
+        .workout-stat-card:hover::before {
+            left: 100%;
+        }
+
+        .workout-stat-card:hover .workout-stat-value {
+            transform: scale(1.05);
+        }
+
+        .workout-stat-card:hover .workout-stat-label {
+            color: var(--text-primary);
+        }
+
+        .workout-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #a52a2a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .workout-stat-label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 300;
+            transition: all 0.3s ease;
+        }
+
+        /* Workouts Section - Matching original theme */
+        .workouts-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .workout-count {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .workouts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Workout Card - Matching original theme */
+        .workout-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .workout-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-color);
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.2);
+        }
+
+        .workout-header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .workout-info h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .workout-date {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .workout-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            min-width: 44px;
+            justify-content: center;
+        }
+
+        .btn-preview {
+            background: rgba(0, 100, 200, 0.2);
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+
+        .btn-preview:hover {
+            background: #007bff;
+            color: white;
+        }
+
+        /* Sets Table - Matching original theme */
+        .sets-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+        }
+
+        .sets-table th {
+            background: rgba(139, 0, 0, 0.3);
+            color: var(--text-primary);
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .sets-table td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+        }
+
+        .set-number {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        /* Empty State - Matching original theme */
+        .no-workouts-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .no-workouts-message i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .no-workouts-message h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .no-workouts-message p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Exercise Description */
+        .exercise-description {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .exercise-description strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .exercise-description p {
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Modal Styles - Matching original theme */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .video-container {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Notification Styles - Matching original theme */
+        .notification {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            left: 15px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            z-index: 1001;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideInRight 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .notification-success {
+            background: rgba(0, 150, 0, 0.9);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .notification-error {
+            background: rgba(200, 0, 0, 0.9);
+            border-left: 4px solid var(--error-color);
+        }
+
+        .notification-warning {
+            background: rgba(200, 150, 0, 0.9);
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .notification-info {
+            background: rgba(0, 100, 200, 0.9);
+            border-left: 4px solid var(--info-color);
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            min-width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .notification.fade-out {
+            animation: slideOutRight 0.3s ease forwards;
+        }
+
+        /* Responsive Design - Matching original breakpoints */
+        @media (min-width: 768px) {
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .brand {
+                justify-content: flex-start;
+            }
+
+            .header-controls {
+                justify-content: flex-end;
+            }
+
+            .admin-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .workout-stats {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+
+            .section-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .workout-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .notification {
+                left: auto;
+                right: 20px;
+                max-width: 400px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .brand h1 {
+                font-size: 2rem;
+            }
+
+            .brand span {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- The HTML structure remains exactly the same as in your previous code -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="brand">
+                    <h1>ELITEFIT</h1>
+                    <span>Admin - User Workouts</span>
+                </div>
+                <div class="header-controls">
+                    <a href="users-management.html" class="control-btn back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Users
+                    </a>
+                    <button class="control-btn" onclick="refreshWorkouts()">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- User Information -->
+        <div class="user-info-card" id="userInfoCard">
+            <div class="admin-header">
+                <h2 id="userName">Loading User Information...</h2>
+                <div class="admin-actions">
+                    <div class="date-filter">
+                        <input type="date" id="dateFilter" class="date-input">
+                    </div>
+                </div>
+            </div>
+            <div class="user-details-grid" id="userDetails">
+                <!-- User details will be populated here -->
+            </div>
+        </div>
+
+        <!-- Workout Statistics -->
+        <div class="workout-stats" id="workoutStats">
+            <div class="workout-stat-card">
+                <div class="workout-stat-value" id="totalWorkouts">0</div>
+                <div class="workout-stat-label">Total Workouts</div>
+            </div>
+            <div class="workout-stat-card">
+                <div class="workout-stat-value" id="totalSets">0</div>
+                <div class="workout-stat-label">Total Sets</div>
+            </div>
+            <div class="workout-stat-card">
+                <div class="workout-stat-value" id="maxWeight">0</div>
+                <div class="workout-stat-label">Max Weight (kg)</div>
+            </div>
+            <div class="workout-stat-card">
+                <div class="workout-stat-value" id="totalVolume">0</div>
+                <div class="workout-stat-label">Total Volume</div>
+            </div>
+        </div>
+
+        <!-- Workouts Section -->
+        <section class="workouts-section">
+            <div class="section-header">
+                <h2>User Workouts</h2>
+                <div class="workout-count">
+                    <span id="workoutCount">0 workouts found</span>
+                </div>
+            </div>
+
+            <div class="workouts-container" id="workoutsContainer">
+                <!-- Workouts will be loaded here -->
+                <div class="no-workouts-message">
+                    <i class="fas fa-dumbbell"></i>
+                    <h3>No Workouts Found</h3>
+                    <p>This user hasn't logged any workouts yet</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- The JavaScript code remains exactly the same as in your previous response -->
+    <script src="script.js">
+        // ... (your existing JavaScript code remains unchanged)
+    </script>
+</body>
+</html>

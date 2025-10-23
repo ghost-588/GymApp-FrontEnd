@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteFit | Exercises Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="header-content">
+            <div class="brand">
+                <h1>ELITEFIT ADMIN</h1>
+                <span>Exercises Management</span>
+            </div>
+            <div class="admin-controls">
+                <button class="control-btn" onclick="refreshExercises()">
+                    <i class="fas fa-sync-alt"></i>
+                    Refresh
+                </button>
+                <button class="control-btn" onclick="exportExercises()">
+                    <i class="fas fa-download"></i>
+                    Export
+                </button>
+                <button class="control-btn" onclick="openSettings()">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <!-- Add Exercise Form -->
+        <section class="users-section" style="margin-bottom: 30px;">
+            <div class="section-header">
+                <h2>Add New Exercise</h2>
+            </div>
+            <form class="add-user-form" id="addExerciseForm">
+                <div class="form-row">
+                    <div class="input-group">
+                        <i class="fas fa-dumbbell input-icon"></i>
+                        <input type="text" id="exerciseName" placeholder="Exercise Name" required minlength="3">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-link input-icon"></i>
+                        <input type="url" id="exerciseUrl" placeholder="Video URL" required minlength="3">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group" style="grid-column: 1 / -1;">
+                        <i class="fas fa-align-left input-icon"></i>
+                        <textarea id="exerciseDescription" placeholder="Exercise Description" required minlength="3" rows="4"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="login-btn" style="margin-top: 20px;">
+                    <span>Add Exercise</span>
+                    <i class="fas fa-plus"></i>
+                </button>
+            </form>
+        </section>
+
+        <!-- Statistics Overview -->
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-value" id="total-exercises">0</div>
+                <div class="stat-label">Total Exercises</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="recent-exercises">0</div>
+                <div class="stat-label">Added This Week</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="video-exercises">0</div>
+                <div class="stat-label">With Videos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="popular-exercises">0</div>
+                <div class="stat-label">Most Popular</div>
+            </div>
+        </div>
+
+        <!-- Exercises Section -->
+        <section class="users-section">
+            <div class="section-header">
+                <h2>Exercises Management</h2>
+                <input type="text" class="search-box" placeholder="Search exercises..." id="searchInput">
+            </div>
+
+            <div class="exercises-grid" id="exercisesGrid">
+                <!-- Exercise cards will be dynamically added here -->
+                <div class="empty-state" id="emptyState">
+                    <i class="fas fa-dumbbell"></i>
+                    <h3>No Exercises Found</h3>
+                    <p>Exercises will appear here when loaded from the API</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

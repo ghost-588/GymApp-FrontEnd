@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteFit | Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="header-content">
+            <div class="brand">
+                <h1>ELITEFIT ADMIN</h1>
+                <span>Management Dashboard</span>
+            </div>
+            <div class="admin-controls">
+                <!-- Navigation Buttons -->
+                <button class="control-btn" onclick="window.location.href='..\\all_exercises\\all_exercises.html'">
+                    <i class="fas fa-dumbbell"></i>
+                    All Exercises
+                </button>
+                <button class="control-btn" onclick="window.location.href='..\\admin_personal_exercise\\admin_personal_exercise.html'">
+                    <i class="fas fa-running"></i>
+                    My Exercises
+                </button>
+                <!-- Existing Buttons -->
+                <button class="control-btn" onclick="refreshUsers()">
+                    <i class="fas fa-sync-alt"></i>
+                    Refresh
+                </button>
+                <button class="control-btn" onclick="exportUsers()">
+                    <i class="fas fa-download"></i>
+                    Export
+                </button>
+                <button class="control-btn" onclick="openSettings()">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <!-- Add User Form -->
+        <section class="users-section" style="margin-bottom: 30px;">
+            <div class="section-header">
+                <h2>Add New User</h2>
+            </div>
+            <form class="add-user-form" id="addUserForm">
+                <div class="form-row">
+                    <div class="input-group">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="firstName" placeholder="First Name" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="lastName" placeholder="Last Name" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-user-tag input-icon"></i>
+                        <select id="role" required>
+                            <option value="">Select Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="nonadmin">Non-Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="login-btn" style="margin-top: 20px;">
+                    <span>Add User</span>
+                    <i class="fas fa-plus"></i>
+                </button>
+            </form>
+        </section>
+
+        <!-- Statistics Overview -->
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-value" id="total-users">0</div>
+                <div class="stat-label">Total Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="admin-users">0</div>
+                <div class="stat-label">Admin Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="nonadmin-users">0</div>
+                <div class="stat-label">Non-Admin Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="new-users">0</div>
+                <div class="stat-label">New This Month</div>
+            </div>
+        </div>
+
+        <!-- Users Section -->
+        <section class="users-section">
+            <div class="section-header">
+                <h2>User Management</h2>
+                <input type="text" class="search-box" placeholder="Search users..." id="searchInput">
+            </div>
+
+            <div class="users-grid" id="usersGrid">
+                <!-- User cards will be dynamically added here -->
+                <div class="empty-state" id="emptyState">
+                    <i class="fas fa-users"></i>
+                    <h3>No Users Found</h3>
+                    <p>Users will appear here when loaded from the API</p>
+                </div>
+            </div>
+        </section>
+    </main>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteFit | Workout Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="brand">
+                    <h1>ELITEFIT</h1>
+                    <span>Workout Tracker</span>
+                </div>
+                <div class="header-controls">
+                    <button class="control-btn" onclick="refreshWorkouts()">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                    <button class="control-btn" onclick="showTodayWorkouts()">
+                        <i class="fas fa-calendar-day"></i>
+                        Today
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="today-exercises">0</div>
+                <div class="stat-label">Today's Exercises</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-sets">0</div>
+                <div class="stat-label">Total Sets</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="max-weight">0</div>
+                <div class="stat-label">Max Weight (kg)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-volume">0</div>
+                <div class="stat-label">Total Volume</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Exercise Form Section -->
+            <section class="form-section">
+                <div class="section-header">
+                    <h2 id="form-title">Log New Exercise</h2>
+                    <div class="form-actions" id="form-actions" style="display: none;">
+                        <button type="button" class="cancel-btn" onclick="cancelEdit()">
+                            <i class="fas fa-times"></i>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+                
+                <form class="exercise-form" id="exerciseForm">
+                    <div class="form-group">
+                        <div class="input-with-icon">
+                            <i class="fas fa-dumbbell"></i>
+                            <select id="exerciseSelect" required>
+                                <option value="">Select Exercise</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Sets Section -->
+                    <div class="sets-section">
+                        <div class="sets-header">
+                            <h3>Sets</h3>
+                            <div class="sets-controls">
+                                <button type="button" class="control-btn" onclick="addSet()">
+                                    <i class="fas fa-plus"></i>
+                                    Add Set
+                                </button>
+                                <button type="button" class="control-btn btn-clear" onclick="clearAllSets()">
+                                    <i class="fas fa-trash"></i>
+                                    Clear All
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="sets-container" id="setsContainer">
+                            <!-- Default set row -->
+                            <div class="set-row">
+                                <div class="set-inputs">
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-repeat"></i>
+                                        <input type="number" class="set-reps" placeholder="Reps" min="1" required>
+                                    </div>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-weight-hanging"></i>
+                                        <input type="number" class="set-weight" placeholder="Weight (kg)" min="0" step="0.5" required>
+                                    </div>
+                                    <button type="button" class="btn-remove-set" onclick="removeSet(this)" disabled>
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submit-btn">
+                        <span>Log Exercise</span>
+                        <i class="fas fa-save"></i>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Workouts Section -->
+            <section class="workouts-section">
+                <div class="section-header">
+                    <h2>My Workouts</h2>
+                    <div class="date-filter">
+                        <input type="date" id="dateFilter" class="date-input">
+                    </div>
+                </div>
+
+                <div class="workouts-container" id="workoutsContainer">
+                    <!-- Empty state -->
+                    <div class="empty-state" id="emptyState">
+                        <i class="fas fa-dumbbell"></i>
+                        <h3>No Workouts Found</h3>
+                        <p>Start logging your exercises to see your workouts here</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script (1).js"></script>
+</body>
+</html>

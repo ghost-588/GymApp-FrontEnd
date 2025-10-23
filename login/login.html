@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteFit | Luxury Gym</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-wrapper">
+            <!-- Left Side - Branding -->
+            <div class="brand-section">
+                <div class="brand-overlay"></div>
+                <div class="brand-content">
+                    <h1 class="brand-title">ELITEFIT</h1>
+                    <p class="brand-subtitle">Exclusive Fitness Experience</p>
+                    <div class="brand-features">
+                        <div class="feature">
+                            <i class="fas fa-dumbbell"></i>
+                            <span>Premium Equipment</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Personal Training</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-spa"></i>
+                            <span>Luxury Spa & Recovery</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Login Form -->
+            <div class="form-section">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2>Member Access</h2>
+                        <p>Enter your credentials to continue</p>
+                    </div>
+
+                    <form id="loginForm" class="login-form">
+                        <div class="input-group">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input id="Email" type="email" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="input-group">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input id="Password" type="password" placeholder="Enter your password" required>
+                            <button type="button" class="password-toggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+
+                        <button type="submit" class="login-btn">
+                            <span>Access EliteFit</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+
+                        <div class="membership-note">
+                            <i class="fas fa-info-circle"></i>
+                            Exclusive membership required. Contact us for membership inquiries.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
