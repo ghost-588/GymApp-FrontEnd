@@ -36,8 +36,8 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
       });
       adminResponse.json()
       if(adminResponse.ok)
-      window.location.href = "\\GymApp-FrontEnd\\admin\\admin.html";
-    else window.location.href = "\\GymApp-FrontEnd\\user_exercise\\user_exercise.html"
+      window.location.href = "/GymApp-FrontEnd/admin/admin.html";
+    else window.location.href = "/GymApp-FrontEnd/user_exercise/user_exercise.html"
     } catch (error) {
       console.error("Error:", error.message);
       alert(error.message); // Optional: show error to user
@@ -45,3 +45,4 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
   });
 
   
+
