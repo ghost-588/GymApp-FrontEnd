@@ -602,7 +602,7 @@ function resetAddUserForm() {
 // View user function - UPDATED to redirect to admin workouts page
 function viewUser(userId) {
     // Redirect to admin user workouts page with the user ID as parameter
-    window.location.href = `/admin_user_exercise/admin_user_exercise.html?user_id=${userId}`;
+    window.location.href = `/GymApp-FrontEnd/admin_user_exercise/admin_user_exercise.html?user_id=${userId}`;
 }
 
 // Close modal function
@@ -684,4 +684,5 @@ function showNotification(message, type = 'info') {
             notification.remove();
         }
     }, 5000);
+
 }
